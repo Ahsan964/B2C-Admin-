@@ -1,0 +1,215 @@
+﻿
+@{
+    ViewBag.Title = "ViewProducts";
+}
+
+<div class="content-wrap">
+    <div class="main">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 p-r-0 title-margin-right">
+                    <div class="page-header">
+                        <div class="page-title">
+                            <h1>Products</h1>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row ">
+                <button style="margin-left: 18px;" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal" id="btnaddnew">Add new Product<i class="mdi mdi-play-circle ml-1"></i></button>
+            </div>
+            <!-- /# row -->
+
+
+            <div id="ProductTable">
+
+            </div>
+
+            <!-- Modal starts -->
+
+            <div class="MyModal modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Add New Product</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body cartdrop-sin-container" id="modelbody">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" id="btnsubmit">Submit</button>
+                            <button type="button" class="btn btn-light cancelbtn" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Ends -->
+
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript">
+
+
+          $(document).ready(function(){
+              $("#ProductTable").load('@Url.Action("ProductTable", "Product")')
+
+              $("#modelbody").load("/Product/AddNewProduct", function (e) {
+                  $("#modal-default").modal("show");
+              });
+
+
+          });
+
+
+
+
+        $("#btnsubmit").click(function (e) {
+            debugger
+            console.log("here");
+
+            jQuery('.addnewf').validate({
+
+                rules: {
+                    Name: {
+                        required: true,
+
+                    },
+                    ShortDescription: {
+                        required: true
+
+                    }, LongDescription: {
+                        required: true,
+
+                    }, FK_Category: {
+                        required: true
+                    }, FK_Brand: {
+                        required: true
+
+                    }, FK_Varient: {
+                        required: true
+
+                    }, FK_PackSize: {
+                        required: true,
+                        equalTo: ".Password"
+
+                    }
+
+                },
+                messages: {
+                    Name: {
+                        required: "Product Name Is Required"
+                    }, ShortDescription: {
+                        required: "Short Description Is Required"
+                    }, LongDescription: {
+                        required: "Long Description Is Required"
+
+                    }, FK_Category: {
+                        required: "Category Is Required"
+                    }, FK_Brand: {
+                        required: "Brand Is Required"
+                    }, FK_Varient: {
+                        required: "Varient Is Required"
+                    }, FK_PackSize: {
+                        required: "Pack Size Is Required"
+
+                    }
+
+                }
+            });
+
+            var form = $("#addnewform")[0];
+        /*    var form = $(form).serializeArray();*/
+            console.log(form);
+            var imagelist = $("#addnewform")
+            var formdata = new FormData(form);
+            console.log("Created FormData, " + [...formdata.keys()].values() + " keys in data");
+            console.log(formdata);
+            // formdata = $('#addnewform')[0];;
+            var imagefiles = document.getElementsByName("images[]")
+            console.log(imagefiles)
+            let $inputImages = imagelist.find('input[name^="images"]');
+            if ($inputImages[0].files.length > 0) {
+                for (var i = 0; i < $inputImages[0].files.length; i++) {
+                    formdata.append("PicturePath", $inputImages[0].files[i]);
+
+                }
+            }
+
+            console.log(formdata);
+            console.log($inputImages);
+            debugger;
+
+
+
+            //var photosfiles = document.getElementsByName("photos[]")
+            //console.log(photosfiles);
+            //let $inputPhotos = imagelist.find('input[name^="photos"]');
+            //if ($inputPhotos[0].files.length > 0) {
+            //    for (var i = 0; i < $inputPhotos[0].files.length; i++) {
+            //        formdata.append("PicturePath", $inputPhotos[0].files[i]);
+
+            //    }
+            //}
+            var uploadedImgList = $("div[data-preloaded='true']");
+            if (uploadedImgList.length > 0) {
+                for (var j = 0; j < uploadedImgList.length; j++) {
+                    formdata.append("ProductPictureList[" + j + "].PicturePath", $(uploadedImgList[j]).find('img').attr('src'));
+                }
+            }
+
+
+
+            //var formdataa = $(form).serialize();
+            console.log(formdata);
+
+            $.validator.unobtrusive.parse(form);
+            if ($(form)) {
+                debugger
+                $.ajax({
+                    type: "POST",
+                    url: "/Product/AddUpdateProduct",
+                    data: formdata,
+                    enctype: 'multipart/form-data',
+                    contentType: false,
+                    processData: false,
+                    success: function (res) {
+                        console.log(res);
+                        if (res.success) {
+                            toastr.success(res.msg);
+                            window.location.reload();
+                        }
+                        else if (res.success == false) {
+                            debugger
+                            toastr.error(res.msg);
+
+                        }
+                    },
+                    failure: function (res) {
+                        console.log(res);
+                    },
+                    err: function (res) {
+                        console.log(res);
+                    }
+                })
+            }
+            else {
+                return false;
+            }
+        });
+
+
+    </script>
+
+}
+
+

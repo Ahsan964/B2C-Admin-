@@ -1,0 +1,216 @@
+﻿@model  B2CAdminPortal.Models.ProductsVM
+@{
+    var imageURL = !string.IsNullOrEmpty(Model.ImageURL) ? Model.ImageURL : "/Content/assets/images/placeholder.png";
+    //var imageURL = "/Content/assets/images/placeholder.png";
+}
+<form id="addnewform" class="addnewf" enctype="multipart/form-data">
+
+    @Html.HiddenFor(model => model.Id, new { id = "natureOfVisitField", value = 0 })
+    <div class="row">
+        <div class="col-sm-3">
+            <!-- text input -->
+            <div class="form-group">
+                <label>Product Name *:</label>
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @placeholder = "Product Name", @class = "form-control" } })
+                @*<input type="text"  class="form-control" placeholder="@ViewBag.CustomerCode" disabled>*@
+            </div>
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-sm-9">
+            <!-- text input -->
+            <div class="form-group">
+                <label>Short Description *:</label>
+                @Html.EditorFor(model => model.ShortDescription, new { htmlAttributes = new { @placeholder = "Short Description", @class = "form-control" } })
+                @*<input type="text"  class="form-control" placeholder="@ViewBag.CustomerCode" disabled>*@
+            </div>
+            @Html.ValidationMessageFor(model => model.ShortDescription, "", new { @class = "text-danger" })
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <!-- text input -->
+            <div class="form-group">
+                <label>Long Description *:</label>
+                @Html.EditorFor(model => model.LongDescription, new { htmlAttributes = new { @placeholder = "Long Description", @class = "form-control" } })
+                @*<input type="text"  class="form-control" placeholder="@ViewBag.CustomerCode" disabled>*@
+            </div>
+            @Html.ValidationMessageFor(model => model.LongDescription, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <!-- text input -->
+            <div class="form-group">
+                <label>Category *:</label>
+                @Html.DropDownListFor(model => model.FK_Category, new SelectList(ViewBag.ProductCat, "Id", "Name"), "Select Category ", new { @Class = "form-control font-weight-bold" })
+                @*<input type="text"  class="form-control" placeholder="@ViewBag.CustomerCode" disabled>*@
+            </div>
+            @Html.ValidationMessageFor(model => model.FK_Category, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label>Brand *:</label>
+                @Html.DropDownListFor(model => model.FK_Brand, new SelectList(ViewBag.ProductBrand, "Id", "Name"), "Select Brand ", new { @Class = "form-control font-weight-bold" })
+                @*<input type="text"  class="form-control" placeholder="@ViewBag.CustomerCode" disabled>*@
+            </div>
+            @Html.ValidationMessageFor(model => model.FK_Brand, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label>Varient *:</label>
+                @Html.DropDownListFor(model => model.FK_Varient, new SelectList(ViewBag.ProductVar, "Id", "Name"), "Select Varient ", new { @Class = "form-control font-weight-bold" })
+                @*<input type="text"  class="form-control" placeholder="@ViewBag.CustomerCode" disabled>*@
+            </div>
+            @Html.ValidationMessageFor(model => model.FK_Varient, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label>Pack Size *:</label>
+                @Html.DropDownListFor(model => model.FK_PackSize, new SelectList(ViewBag.ProductPack, "Id", "UOM"), "Select Pack Size ", new { @Class = "form-control font-weight-bold" })
+                @*<input type="text"  class="form-control" placeholder="@ViewBag.CustomerCode" disabled>*@
+            </div>
+            @Html.ValidationMessageFor(model => model.FK_PackSize, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @************************************************** Product Prices *********************************************@
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label>Pack Size *:</label>
+                @Html.DropDownListFor(model => model.FK_City, new SelectList(ViewBag.cities, "Id", "Name"), "Select City ", new { @Class = "form-control font-weight-bold" })
+                @*<input type="text"  class="form-control" placeholder="@ViewBag.CustomerCode" disabled>*@
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label>Price *:</label>
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @placeholder = "Price", @class = "form-control" } })
+                @*<input type="text"  class="form-control" placeholder="@ViewBag.CustomerCode" disabled>*@
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label>Discount *:</label>
+                @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @placeholder = "Discount", @class = "form-control" } })
+                @*<input type="text"  class="form-control" placeholder="@ViewBag.CustomerCode" disabled>*@
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            @Html.CheckBoxFor(model => model.IsFeatured) <b>Is Featured?</b>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <!-- text input -->
+            <div class="form-group">
+                <label>Image</label>
+                <input type="hidden" class="image-url" id="ImageURL" name="ImageURL" value="@Model.ImageURL" required="required" />
+                <input class="form-control image-upload" id="imageUpload" name="Image" type="file" accept=".jpg, .jpeg, .png" />
+
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="thumb">
+                <img class="MyImg img-thumbnail img-fluid" id="productImage" src="@imageURL" />
+            </div>
+        </div>
+
+    </div>
+
+    @******************************************* Product Details ************************************************************@
+
+    <center><h5>Product Details</h5></center>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="input-images">
+
+            </div>
+        </div>
+
+    </div>
+
+
+</form>
+
+
+<script type="text/javascript" src="~/Content/dist/image-uploader.min.js"></script>
+<script>
+
+     $(document).ready(function() {
+         $("#imageUpload").change(function () {
+             debugger
+            var element = this;
+            var formData = new FormData();
+            var totalFiles = element.files.length;
+            for (var i = 0; i < totalFiles; i++) {
+                var file = element.files[i];
+                formData.append("Photo", file);
+            }
+            $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("UploadImage", "Shared")',
+                    dataType: 'json',
+                    data: formData,
+                    contentType: false,
+                    processData: false
+                })
+                .done(function(response) {
+                    console.log(response);
+                    if (response.Success) {
+                        jQuery("#ImageURL").val(response.ImageURL);
+                        jQuery("#productImage").attr("src", response.ImageURL);
+                    }
+                })
+                .fail(function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("FAIL");
+                });
+        });
+     });
+
+     var prdctpic=@Html.Raw(Json.Encode(ViewBag.ProductPics));
+    console.log(prdctpic);
+
+
+    $('.input-images').imageUploader();
+
+
+    if (prdctpic.length != null) {
+
+
+        console.log("HELLO")
+        console.log(prdctpic)
+        let preloaded = [];
+        for (var i = 0; i < prdctpic.length; i++) {
+            debugger
+            var j = i;
+            preloaded.push(
+                {
+                    id: i,
+                    src: prdctpic[i].PicturePath
+                }
+            )
+        }
+
+        $('.input-images').imageUploader({
+            preloaded: preloaded,
+            imagesInputName: 'photos',
+            preloadedInputName: 'old',
+            maxFiles: 10
+        });
+
+
+    }
+
+   
+
+
+
+</script>

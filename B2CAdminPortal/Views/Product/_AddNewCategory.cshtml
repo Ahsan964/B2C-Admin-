@@ -1,0 +1,16 @@
+﻿@model B2CAdminPortal.Models.ProductsVM
+<form id="addnewform">
+    @Html.HiddenFor(model => model.Id, new { id = "natureOfVisitField", value = 0 })
+    <div class="row">
+        <div class="col-sm-6">
+            <!-- text input -->
+            <div class="form-group">
+                <label>Category Name</label>
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @placeholder = "Caetgory Name", @class = "form-control" } })
+            </div>
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+       
+    </div>
+
+</form>

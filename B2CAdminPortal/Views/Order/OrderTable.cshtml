@@ -1,0 +1,273 @@
+﻿@model List<B2CAdminPortal.Models.OrderVM>
+
+<div id="main-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="jsgrid-table-panel">
+                    @*<div id="jsGrid"></div>*@
+                    <table id="example1" class="table table-striped table-bordered table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th>Order-Number</th>
+                                <th>Total Qty</th>
+                                <th>Total Price</th>
+                                <th>Shipping Address</th>
+                                <th>Billing Address</th>
+                                <th>Phone #</th>
+                                <th>Currency</th>
+                                <th>Conversion Rate</th>
+                                <th>Status</th>
+                                <th>Payment Mode</th>
+
+                                <th>Is Payment Received</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.Count > 0)
+                            {
+                                foreach (var item in Model)
+                                {
+                            <tr data-id="@item.Id">
+                                <td class="td-img text-left">
+                                    @item.Id
+                                </td>
+                                <td>
+                                    @item.TotalQuantity
+                                </td>
+                                <td>
+                                    @item.TotalPrice
+                                </td>
+                                <td>
+                                    @item.ShippingAddress
+                                </td>
+                                <td>
+                                    @item.BillingAddress
+                                </td>
+                                <td>
+                                    @item.PhoneNo
+                                </td>
+                                <td>
+                                    @item.Currency
+                                </td>
+                                <td>
+                                    @item.ConversionRate
+                                </td>
+                                
+
+                                <td>
+                                    @if (item.Status == "InProcess" && item.PaymentMode == "COD")
+                                    {
+                                        <select class="ostatus dropdown-toggle" name="Status" id="Status">
+                                            <option value="@item.Status">@item.Status</option>
+                                            <option value="Pending">Pending</option>
+                                            <option value="Confirmed">Confirmed</option>
+                                            <option value="Delivered">Delivered</option>
+                                            <option value="Delivered">Cancelled</option>
+                                            <option value="Delivered">Rejected</option>
+                                        </select>
+                                    }
+                                    else
+                                    {
+                                        @item.Status
+                                    }
+
+                                </td>
+
+                                <td>
+                                    @item.PaymentMode
+                                </td>
+                                <td>
+                                    @if (item.PaymentStatus == true)
+                                    {
+                                        <input id="PaymentStatus" name="PaymentStatus" value="@item.PaymentStatus" class="cBox" type="checkbox" checked="checked">
+                                    }
+                                    else
+                                    {
+                                        <input id="PaymentStatus" name="PaymentStatus" value="@item.PaymentStatus" class="cBox" type="checkbox">
+                                    }
+                                </td>
+                                <td>
+                                    <a class="in" href=" @Url.Action("UpdateOrder", "Order", new { Id = item.Id} )" ><i class="ti-pencil" title="Info"></i></a>
+                                    <a href="#" onclick="ConfirmDelete(@item.Id)"><i class="ti-close removecartbtn" title="Cancel"></i></a>
+
+                                </td>
+                            </tr>
+                                }
+
+
+
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="8">
+                                        <h4>
+                                            No Orders Found
+                                        </h4>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /# card -->
+        </div>
+        <!-- /# column -->
+    </div>
+    <!-- /# row -->
+    <!-- Modal starts -->
+    <!-- Modal Ends -->
+
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="footer">
+                <p>2018 © Admin Board. - <a href="#">example.com</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+    $('.ostatus').change(function () {
+        debugger
+        var row = $(this).closest("tr");
+        var id = $(row).attr('data-id');
+       // var status = $('#Status').attr("selected");
+        var status = $('#Status :selected').text();
+        alert(status);
+
+
+
+            Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Change it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Order/StatusChange',
+                    data: {
+                        status: status,
+                        Id: id
+                    },
+                    dataType: 'JSON',
+                    success: function (res) {
+                        if (res.success) {
+                            debugger
+                            Swal.fire(
+                                'Changed!',
+                                'Status has been changed.',
+                                'success'
+                            )
+                             $("#OrderTable").load('@Url.Action("OrderTable", "Order")')
+                        }
+                        else {
+                            toast.error("Failed");
+                        }
+                    }
+                })
+            }
+        })
+
+    })
+
+
+    function ConfirmDelete(CustomerID) {
+        debugger
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Order/DisableOrder?id=' + CustomerID,
+                    dataType: 'JSON',
+                    success: function (res) {
+                        if (res.success) {
+                            debugger
+
+
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                             $("#OrderTable").load('@Url.Action("OrderTable", "Order")')
+
+                            //window.location.href = "//ViewClient"
+                            toastr.success("Canceled");
+
+                        }
+                        else {
+                            toast.error("Failed");
+                        }
+                    }
+                })
+            }
+        })
+    }
+
+    $('.cBox').click(function () {
+        //alert("sss");
+        var row = $(this).closest("tr");
+        var id = $(row).attr('data-id');
+
+         Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Change it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Order/PaymentStatusChange?id=' + id,
+                    dataType: 'JSON',
+                    success: function (res) {
+                        if (res.success) {
+                            debugger
+                            Swal.fire(
+                                'Payment Status Changed!',
+                                'Your Payment status has changed.',
+                                'success'
+                            )
+                             $("#OrderTable").load('@Url.Action("OrderTable", "Order")')
+                        }
+                        else {
+                            toast.error("Failed");
+                        }
+                    }
+                })
+            }
+        })
+
+    })
+
+
+</script>
+
+
+

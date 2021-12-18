@@ -1,0 +1,636 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="B2CModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Cart">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FK_ProductMaster" Type="int" Nullable="false" />
+    <Property Name="FK_Customer" Type="int" />
+    <Property Name="Guid" Type="nvarchar(max)" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="IsWishlist" Type="bit" />
+    <Property Name="TotalQuantity" Type="int" />
+    <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CreatedOn" Type="smalldatetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="ModifiedOn" Type="smalldatetime" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="Currency" Type="varchar" MaxLength="50" />
+    <Property Name="ConversionRate" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="CreatedOn" Type="smalldatetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="ModifiedOn" Type="smalldatetime" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="CommentAndRating">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Comment" Type="nvarchar" MaxLength="500" />
+    <Property Name="Rate" Type="int" />
+    <Property Name="FK_ProductMaster" Type="int" />
+    <Property Name="CustomerId" Type="int" />
+    <Property Name="CreatedOn" Type="smalldatetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="ModifiedOn" Type="smalldatetime" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="Guid" Type="nvarchar(max)" />
+    <Property Name="IsAnonymousUser" Type="bit" />
+    <Property Name="AnonymousName" Type="nvarchar" MaxLength="100" />
+    <Property Name="EmailId" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="customer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="PhoneNo" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="EmailId" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="DateOfBirth" Type="date" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="10" />
+    <Property Name="CreatedOn" Type="smalldatetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="ModifiedOn" Type="smalldatetime" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" />
+    <Property Name="Country" Type="nvarchar" MaxLength="50" />
+    <Property Name="Address" Type="nvarchar" MaxLength="50" />
+    <Property Name="Guid" Type="nvarchar(max)" />
+    <Property Name="IsWebUser" Type="bit" />
+    <Property Name="IsAppUser" Type="bit" />
+    <Property Name="RegisteredFrom" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="FK_OrderMaster" Type="int" Nullable="false" />
+    <Property Name="FK_ProductMaster" Type="int" Nullable="false" />
+    <Property Name="Discount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CreatedOn" Type="smalldatetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="ModifiedOn" Type="smalldatetime" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="FK_Customer" Type="int" />
+    <Property Name="DiscountedPrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Currency" Type="varchar" MaxLength="50" />
+    <Property Name="ConversionRate" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'B2CPortal.dbo.OrderDetailLogs' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="OrderDetailLogs">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="FK_OrderMaster" />
+      <PropertyRef Name="FK_ProductMaster" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="FK_OrderMaster" Type="int" Nullable="false" />
+    <Property Name="FK_ProductMaster" Type="int" Nullable="false" />
+    <Property Name="Discount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CreatedOn" Type="smalldatetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="ModifiedOn" Type="smalldatetime" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="FK_Customer" Type="int" />
+    <Property Name="DiscountedPrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Currency" Type="varchar" MaxLength="50" />
+    <Property Name="ConversionRate" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="LogDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="OrderMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderDescription" Type="nvarchar" MaxLength="300" />
+    <Property Name="TotalQuantity" Type="int" />
+    <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="FK_Customer" Type="int" Nullable="false" />
+    <Property Name="OrderNo" Type="nvarchar" MaxLength="100" />
+    <Property Name="ShippingAddress" Type="nvarchar" MaxLength="500" />
+    <Property Name="BillingAddress" Type="nvarchar" MaxLength="500" />
+    <Property Name="PhoneNo" Type="nvarchar" MaxLength="100" />
+    <Property Name="EmailId" Type="nvarchar" MaxLength="100" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="20" />
+    <Property Name="DateOfBirth" Type="date" />
+    <Property Name="CNIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="CreatedOn" Type="smalldatetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="ModifiedOn" Type="smalldatetime" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="City" Type="varchar" MaxLength="50" />
+    <Property Name="Country" Type="varchar" MaxLength="50" />
+    <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Currency" Type="varchar" MaxLength="50" />
+    <Property Name="ConversionRate" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PaymentMode" Type="varchar" MaxLength="50" />
+    <Property Name="PaymentStatus" Type="bit" />
+    <Property Name="IsPriceChanged" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'B2CPortal.dbo.OrderMasterLogs' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="OrderMasterLogs">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="FK_Customer" />
+      <PropertyRef Name="Status" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="OrderDescription" Type="nvarchar" MaxLength="300" />
+    <Property Name="TotalQuantity" Type="int" />
+    <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="FK_Customer" Type="int" Nullable="false" />
+    <Property Name="OrderNo" Type="nvarchar" MaxLength="100" />
+    <Property Name="ShippingAddress" Type="nvarchar" MaxLength="500" />
+    <Property Name="BillingAddress" Type="nvarchar" MaxLength="500" />
+    <Property Name="PhoneNo" Type="nvarchar" MaxLength="100" />
+    <Property Name="EmailId" Type="nvarchar" MaxLength="100" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="20" />
+    <Property Name="DateOfBirth" Type="date" />
+    <Property Name="CNIC" Type="nvarchar" MaxLength="20" />
+    <Property Name="CreatedOn" Type="smalldatetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="ModifiedOn" Type="smalldatetime" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="City" Type="varchar" MaxLength="50" />
+    <Property Name="Country" Type="varchar" MaxLength="50" />
+    <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Currency" Type="varchar" MaxLength="50" />
+    <Property Name="ConversionRate" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PaymentMode" Type="varchar" MaxLength="50" />
+    <Property Name="PaymentStatus" Type="bit" />
+    <Property Name="IsPriceChanged" Type="bit" />
+    <Property Name="LogDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ProductBrand">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="FK_ProductCategory" Type="int" Nullable="false" />
+    <Property Name="CreatedOn" Type="smalldatetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="ModifiedOn" Type="smalldatetime" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="ProductCategory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="CreatedOn" Type="smalldatetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="ModifiedOn" Type="smalldatetime" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="ProductDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ImageUrl" Type="nvarchar(max)" />
+    <Property Name="FK_ProductMaster" Type="int" Nullable="false" />
+    <Property Name="CreatedOn" Type="smalldatetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="ModifiedOn" Type="smalldatetime" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="ProductMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="MasterImageUrl" Type="nvarchar" MaxLength="300" />
+    <Property Name="ShortDescription" Type="nvarchar" MaxLength="500" />
+    <Property Name="LongDescription" Type="nvarchar(max)" />
+    <Property Name="FK_ProductCategory" Type="int" Nullable="false" />
+    <Property Name="FK_ProductBrand" Type="int" Nullable="false" />
+    <Property Name="FK_ProductVeriant" Type="int" Nullable="false" />
+    <Property Name="FK_ProductPackSize" Type="int" Nullable="false" />
+    <Property Name="CreatedOn" Type="smalldatetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="ModifiedOn" Type="smalldatetime" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsFeatured" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductPackSize">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="UOM" Type="nvarchar" MaxLength="20" />
+    <Property Name="UnitInNumeric" Type="int" />
+    <Property Name="CreatedOn" Type="smalldatetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="ModifiedOn" Type="smalldatetime" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="ProductPrice">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Discount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CreatedOn" Type="smalldatetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="ModifiedOn" Type="smalldatetime" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="FK_City" Type="int" Nullable="false" />
+    <Property Name="FK_ProductMaster" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductVariant">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="CreatedOn" Type="smalldatetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="ModifiedOn" Type="smalldatetime" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Test">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="PhoneNo" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Userinfo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" />
+    <Property Name="PhoneNo" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_AuditOrderDetail_OrderMaster">
+    <End Role="OrderMaster" Type="Self.OrderMaster" Multiplicity="1" />
+    <End Role="OrderDetailLogs" Type="Self.OrderDetailLogs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderDetailLogs">
+        <PropertyRef Name="FK_OrderMaster" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AuditOrderDetail_ProductMaster">
+    <End Role="ProductMaster" Type="Self.ProductMaster" Multiplicity="1" />
+    <End Role="OrderDetailLogs" Type="Self.OrderDetailLogs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderDetailLogs">
+        <PropertyRef Name="FK_ProductMaster" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cart_Customer">
+    <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+    <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="FK_Customer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cart_ProductMaster">
+    <End Role="ProductMaster" Type="Self.ProductMaster" Multiplicity="1" />
+    <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="FK_ProductMaster" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CommentAndRating_ProductMaster">
+    <End Role="ProductMaster" Type="Self.ProductMaster" Multiplicity="0..1" />
+    <End Role="CommentAndRating" Type="Self.CommentAndRating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CommentAndRating">
+        <PropertyRef Name="FK_ProductMaster" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetail_OrderMaster">
+    <End Role="OrderMaster" Type="Self.OrderMaster" Multiplicity="1" />
+    <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="FK_OrderMaster" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetail_ProductMaster">
+    <End Role="ProductMaster" Type="Self.ProductMaster" Multiplicity="1" />
+    <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="FK_ProductMaster" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderMaster_Customer">
+    <End Role="customer" Type="Self.customer" Multiplicity="1" />
+    <End Role="OrderMaster" Type="Self.OrderMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderMaster">
+        <PropertyRef Name="FK_Customer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderMasterLogs_Customer">
+    <End Role="customer" Type="Self.customer" Multiplicity="1" />
+    <End Role="OrderMasterLogs" Type="Self.OrderMasterLogs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderMasterLogs">
+        <PropertyRef Name="FK_Customer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductDetail_ProductMaster">
+    <End Role="ProductMaster" Type="Self.ProductMaster" Multiplicity="1" />
+    <End Role="ProductDetail" Type="Self.ProductDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductDetail">
+        <PropertyRef Name="FK_ProductMaster" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductMaster_ProductBrand">
+    <End Role="ProductBrand" Type="Self.ProductBrand" Multiplicity="1" />
+    <End Role="ProductMaster" Type="Self.ProductMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductBrand">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductMaster">
+        <PropertyRef Name="FK_ProductBrand" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductMaster_ProductCategory">
+    <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="1" />
+    <End Role="ProductMaster" Type="Self.ProductMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductCategory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductMaster">
+        <PropertyRef Name="FK_ProductCategory" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductMaster_ProductPackSize">
+    <End Role="ProductPackSize" Type="Self.ProductPackSize" Multiplicity="1" />
+    <End Role="ProductMaster" Type="Self.ProductMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductPackSize">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductMaster">
+        <PropertyRef Name="FK_ProductPackSize" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductMaster_ProductVariant">
+    <End Role="ProductVariant" Type="Self.ProductVariant" Multiplicity="1" />
+    <End Role="ProductMaster" Type="Self.ProductMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductVariant">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductMaster">
+        <PropertyRef Name="FK_ProductVeriant" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductPrice_ProductMaster">
+    <End Role="ProductMaster" Type="Self.ProductMaster" Multiplicity="1" />
+    <End Role="ProductPrice" Type="Self.ProductPrice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductPrice">
+        <PropertyRef Name="FK_ProductMaster" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="B2CModelStoreContainer">
+    <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CommentAndRating" EntityType="Self.CommentAndRating" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="customer" EntityType="Self.customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderMaster" EntityType="Self.OrderMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductBrand" EntityType="Self.ProductBrand" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductDetail" EntityType="Self.ProductDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductMaster" EntityType="Self.ProductMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductPackSize" EntityType="Self.ProductPackSize" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductPrice" EntityType="Self.ProductPrice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductVariant" EntityType="Self.ProductVariant" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Test" EntityType="Self.Test" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Userinfo" EntityType="Self.Userinfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderDetailLogs" EntityType="Self.OrderDetailLogs" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [OrderDetailLogs].[Id] AS [Id], 
+    [OrderDetailLogs].[Quantity] AS [Quantity], 
+    [OrderDetailLogs].[Price] AS [Price], 
+    [OrderDetailLogs].[FK_OrderMaster] AS [FK_OrderMaster], 
+    [OrderDetailLogs].[FK_ProductMaster] AS [FK_ProductMaster], 
+    [OrderDetailLogs].[Discount] AS [Discount], 
+    [OrderDetailLogs].[CreatedOn] AS [CreatedOn], 
+    [OrderDetailLogs].[CreatedBy] AS [CreatedBy], 
+    [OrderDetailLogs].[ModifiedOn] AS [ModifiedOn], 
+    [OrderDetailLogs].[ModifiedBy] AS [ModifiedBy], 
+    [OrderDetailLogs].[IsActive] AS [IsActive], 
+    [OrderDetailLogs].[FK_Customer] AS [FK_Customer], 
+    [OrderDetailLogs].[DiscountedPrice] AS [DiscountedPrice], 
+    [OrderDetailLogs].[TotalPrice] AS [TotalPrice], 
+    [OrderDetailLogs].[Currency] AS [Currency], 
+    [OrderDetailLogs].[ConversionRate] AS [ConversionRate], 
+    [OrderDetailLogs].[LogDate] AS [LogDate]
+    FROM [dbo].[OrderDetailLogs] AS [OrderDetailLogs]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="OrderMasterLogs" EntityType="Self.OrderMasterLogs" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [OrderMasterLogs].[Id] AS [Id], 
+    [OrderMasterLogs].[OrderDescription] AS [OrderDescription], 
+    [OrderMasterLogs].[TotalQuantity] AS [TotalQuantity], 
+    [OrderMasterLogs].[TotalPrice] AS [TotalPrice], 
+    [OrderMasterLogs].[FK_Customer] AS [FK_Customer], 
+    [OrderMasterLogs].[OrderNo] AS [OrderNo], 
+    [OrderMasterLogs].[ShippingAddress] AS [ShippingAddress], 
+    [OrderMasterLogs].[BillingAddress] AS [BillingAddress], 
+    [OrderMasterLogs].[PhoneNo] AS [PhoneNo], 
+    [OrderMasterLogs].[EmailId] AS [EmailId], 
+    [OrderMasterLogs].[Gender] AS [Gender], 
+    [OrderMasterLogs].[DateOfBirth] AS [DateOfBirth], 
+    [OrderMasterLogs].[CNIC] AS [CNIC], 
+    [OrderMasterLogs].[CreatedOn] AS [CreatedOn], 
+    [OrderMasterLogs].[CreatedBy] AS [CreatedBy], 
+    [OrderMasterLogs].[ModifiedOn] AS [ModifiedOn], 
+    [OrderMasterLogs].[ModifiedBy] AS [ModifiedBy], 
+    [OrderMasterLogs].[IsActive] AS [IsActive], 
+    [OrderMasterLogs].[City] AS [City], 
+    [OrderMasterLogs].[Country] AS [Country], 
+    [OrderMasterLogs].[Status] AS [Status], 
+    [OrderMasterLogs].[Currency] AS [Currency], 
+    [OrderMasterLogs].[ConversionRate] AS [ConversionRate], 
+    [OrderMasterLogs].[PaymentMode] AS [PaymentMode], 
+    [OrderMasterLogs].[PaymentStatus] AS [PaymentStatus], 
+    [OrderMasterLogs].[IsPriceChanged] AS [IsPriceChanged], 
+    [OrderMasterLogs].[LogDate] AS [LogDate]
+    FROM [dbo].[OrderMasterLogs] AS [OrderMasterLogs]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_AuditOrderDetail_OrderMaster" Association="Self.FK_AuditOrderDetail_OrderMaster">
+      <End Role="OrderMaster" EntitySet="OrderMaster" />
+      <End Role="OrderDetailLogs" EntitySet="OrderDetailLogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AuditOrderDetail_ProductMaster" Association="Self.FK_AuditOrderDetail_ProductMaster">
+      <End Role="ProductMaster" EntitySet="ProductMaster" />
+      <End Role="OrderDetailLogs" EntitySet="OrderDetailLogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cart_Customer" Association="Self.FK_Cart_Customer">
+      <End Role="customer" EntitySet="customer" />
+      <End Role="Cart" EntitySet="Cart" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cart_ProductMaster" Association="Self.FK_Cart_ProductMaster">
+      <End Role="ProductMaster" EntitySet="ProductMaster" />
+      <End Role="Cart" EntitySet="Cart" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CommentAndRating_ProductMaster" Association="Self.FK_CommentAndRating_ProductMaster">
+      <End Role="ProductMaster" EntitySet="ProductMaster" />
+      <End Role="CommentAndRating" EntitySet="CommentAndRating" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetail_OrderMaster" Association="Self.FK_OrderDetail_OrderMaster">
+      <End Role="OrderMaster" EntitySet="OrderMaster" />
+      <End Role="OrderDetail" EntitySet="OrderDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetail_ProductMaster" Association="Self.FK_OrderDetail_ProductMaster">
+      <End Role="ProductMaster" EntitySet="ProductMaster" />
+      <End Role="OrderDetail" EntitySet="OrderDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderMaster_Customer" Association="Self.FK_OrderMaster_Customer">
+      <End Role="customer" EntitySet="customer" />
+      <End Role="OrderMaster" EntitySet="OrderMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderMasterLogs_Customer" Association="Self.FK_OrderMasterLogs_Customer">
+      <End Role="customer" EntitySet="customer" />
+      <End Role="OrderMasterLogs" EntitySet="OrderMasterLogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductDetail_ProductMaster" Association="Self.FK_ProductDetail_ProductMaster">
+      <End Role="ProductMaster" EntitySet="ProductMaster" />
+      <End Role="ProductDetail" EntitySet="ProductDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductMaster_ProductBrand" Association="Self.FK_ProductMaster_ProductBrand">
+      <End Role="ProductBrand" EntitySet="ProductBrand" />
+      <End Role="ProductMaster" EntitySet="ProductMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductMaster_ProductCategory" Association="Self.FK_ProductMaster_ProductCategory">
+      <End Role="ProductCategory" EntitySet="ProductCategory" />
+      <End Role="ProductMaster" EntitySet="ProductMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductMaster_ProductPackSize" Association="Self.FK_ProductMaster_ProductPackSize">
+      <End Role="ProductPackSize" EntitySet="ProductPackSize" />
+      <End Role="ProductMaster" EntitySet="ProductMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductMaster_ProductVariant" Association="Self.FK_ProductMaster_ProductVariant">
+      <End Role="ProductVariant" EntitySet="ProductVariant" />
+      <End Role="ProductMaster" EntitySet="ProductMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductPrice_ProductMaster" Association="Self.FK_ProductPrice_ProductMaster">
+      <End Role="ProductMaster" EntitySet="ProductMaster" />
+      <End Role="ProductPrice" EntitySet="ProductPrice" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

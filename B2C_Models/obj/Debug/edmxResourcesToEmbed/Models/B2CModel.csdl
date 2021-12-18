@@ -1,0 +1,612 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="B2CModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="B2CEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Tests" EntityType="B2CModel.Test" />
+    <EntitySet Name="Cities" EntityType="B2CModel.City" />
+    <EntitySet Name="OrderDetails" EntityType="B2CModel.OrderDetail" />
+    <EntitySet Name="ProductBrands" EntityType="B2CModel.ProductBrand" />
+    <EntitySet Name="ProductDetails" EntityType="B2CModel.ProductDetail" />
+    <EntitySet Name="ProductMasters" EntityType="B2CModel.ProductMaster" />
+    <EntitySet Name="ProductPackSizes" EntityType="B2CModel.ProductPackSize" />
+    <EntitySet Name="ProductVariants" EntityType="B2CModel.ProductVariant" />
+    <EntitySet Name="Users" EntityType="B2CModel.User" />
+    <EntitySet Name="Userinfoes" EntityType="B2CModel.Userinfo" />
+    <AssociationSet Name="FK_OrderDetail_ProductMaster" Association="B2CModel.FK_OrderDetail_ProductMaster">
+      <End Role="ProductMaster" EntitySet="ProductMasters" />
+      <End Role="OrderDetail" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductMaster_ProductBrand" Association="B2CModel.FK_ProductMaster_ProductBrand">
+      <End Role="ProductBrand" EntitySet="ProductBrands" />
+      <End Role="ProductMaster" EntitySet="ProductMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductDetail_ProductMaster" Association="B2CModel.FK_ProductDetail_ProductMaster">
+      <End Role="ProductMaster" EntitySet="ProductMasters" />
+      <End Role="ProductDetail" EntitySet="ProductDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductMaster_ProductPackSize" Association="B2CModel.FK_ProductMaster_ProductPackSize">
+      <End Role="ProductPackSize" EntitySet="ProductPackSizes" />
+      <End Role="ProductMaster" EntitySet="ProductMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductMaster_ProductVariant" Association="B2CModel.FK_ProductMaster_ProductVariant">
+      <End Role="ProductVariant" EntitySet="ProductVariants" />
+      <End Role="ProductMaster" EntitySet="ProductMasters" />
+    </AssociationSet>
+    <EntitySet Name="ProductPrices" EntityType="B2CModel.ProductPrice" />
+    <AssociationSet Name="FK_ProductPrice_ProductMaster" Association="B2CModel.FK_ProductPrice_ProductMaster">
+      <End Role="ProductMaster" EntitySet="ProductMasters" />
+      <End Role="ProductPrice" EntitySet="ProductPrices" />
+    </AssociationSet>
+    <EntitySet Name="customers" EntityType="B2CModel.customer" />
+    <EntitySet Name="CommentAndRatings" EntityType="B2CModel.CommentAndRating" />
+    <AssociationSet Name="FK_CommentAndRating_ProductMaster" Association="B2CModel.FK_CommentAndRating_ProductMaster">
+      <End Role="ProductMaster" EntitySet="ProductMasters" />
+      <End Role="CommentAndRating" EntitySet="CommentAndRatings" />
+    </AssociationSet>
+    <EntitySet Name="ProductCategories" EntityType="B2CModel.ProductCategory" />
+    <AssociationSet Name="FK_ProductMaster_ProductCategory" Association="B2CModel.FK_ProductMaster_ProductCategory">
+      <End Role="ProductCategory" EntitySet="ProductCategories" />
+      <End Role="ProductMaster" EntitySet="ProductMasters" />
+    </AssociationSet>
+    <EntitySet Name="Carts" EntityType="B2CModel.Cart" />
+    <AssociationSet Name="FK_Cart_Customer" Association="B2CModel.FK_Cart_Customer">
+      <End Role="customer" EntitySet="customers" />
+      <End Role="Cart" EntitySet="Carts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cart_ProductMaster" Association="B2CModel.FK_Cart_ProductMaster">
+      <End Role="ProductMaster" EntitySet="ProductMasters" />
+      <End Role="Cart" EntitySet="Carts" />
+    </AssociationSet>
+    <EntitySet Name="OrderMasters" EntityType="B2CModel.OrderMaster" />
+    <EntitySet Name="OrderDetailLogs" EntityType="B2CModel.OrderDetailLog" />
+    <EntitySet Name="OrderMasterLogs" EntityType="B2CModel.OrderMasterLog" />
+    <AssociationSet Name="FK_OrderMaster_Customer" Association="B2CModel.FK_OrderMaster_Customer">
+      <End Role="customer" EntitySet="customers" />
+      <End Role="OrderMaster" EntitySet="OrderMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderMasterLogs_Customer" Association="B2CModel.FK_OrderMasterLogs_Customer">
+      <End Role="customer" EntitySet="customers" />
+      <End Role="OrderMasterLog" EntitySet="OrderMasterLogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetail_OrderMaster" Association="B2CModel.FK_OrderDetail_OrderMaster">
+      <End Role="OrderMaster" EntitySet="OrderMasters" />
+      <End Role="OrderDetail" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AuditOrderDetail_OrderMaster" Association="B2CModel.FK_AuditOrderDetail_OrderMaster">
+      <End Role="OrderMaster" EntitySet="OrderMasters" />
+      <End Role="OrderDetailLog" EntitySet="OrderDetailLogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AuditOrderDetail_ProductMaster" Association="B2CModel.FK_AuditOrderDetail_ProductMaster">
+      <End Role="ProductMaster" EntitySet="ProductMasters" />
+      <End Role="OrderDetailLog" EntitySet="OrderDetailLogs" />
+    </AssociationSet>
+    <EntitySet Name="sysdiagrams" EntityType="B2CModel.sysdiagram" />
+  </EntityContainer>
+  <EntityType Name="Test">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="0" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="FK_OrderMaster" Type="Int32" Nullable="false" />
+    <Property Name="FK_ProductMaster" Type="Int32" Nullable="false" />
+    <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="0" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="ProductMaster" Relationship="B2CModel.FK_OrderDetail_ProductMaster" FromRole="OrderDetail" ToRole="ProductMaster" />
+    <Property Name="FK_Customer" Type="Int32" />
+    <Property Name="DiscountedPrice" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Currency" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ConversionRate" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="OrderMaster" Relationship="B2CModel.FK_OrderDetail_OrderMaster" FromRole="OrderDetail" ToRole="OrderMaster" />
+  </EntityType>
+  <EntityType Name="ProductBrand">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="FK_ProductCategory" Type="Int32" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="0" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="ProductMasters" Relationship="B2CModel.FK_ProductMaster_ProductBrand" FromRole="ProductBrand" ToRole="ProductMaster" />
+  </EntityType>
+  <EntityType Name="ProductDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="FK_ProductMaster" Type="Int32" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="0" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="ProductMaster" Relationship="B2CModel.FK_ProductDetail_ProductMaster" FromRole="ProductDetail" ToRole="ProductMaster" />
+  </EntityType>
+  <EntityType Name="ProductMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ShortDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="LongDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="FK_ProductCategory" Type="Int32" Nullable="false" />
+    <Property Name="FK_ProductBrand" Type="Int32" Nullable="false" />
+    <Property Name="FK_ProductVeriant" Type="Int32" Nullable="false" />
+    <Property Name="FK_ProductPackSize" Type="Int32" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="0" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="OrderDetails" Relationship="B2CModel.FK_OrderDetail_ProductMaster" FromRole="ProductMaster" ToRole="OrderDetail" />
+    <NavigationProperty Name="ProductBrand" Relationship="B2CModel.FK_ProductMaster_ProductBrand" FromRole="ProductMaster" ToRole="ProductBrand" />
+    <NavigationProperty Name="ProductDetails" Relationship="B2CModel.FK_ProductDetail_ProductMaster" FromRole="ProductMaster" ToRole="ProductDetail" />
+    <NavigationProperty Name="ProductPackSize" Relationship="B2CModel.FK_ProductMaster_ProductPackSize" FromRole="ProductMaster" ToRole="ProductPackSize" />
+    <NavigationProperty Name="ProductVariant" Relationship="B2CModel.FK_ProductMaster_ProductVariant" FromRole="ProductMaster" ToRole="ProductVariant" />
+    <Property Name="MasterImageUrl" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ProductPrices" Relationship="B2CModel.FK_ProductPrice_ProductMaster" FromRole="ProductMaster" ToRole="ProductPrice" />
+    <NavigationProperty Name="CommentAndRatings" Relationship="B2CModel.FK_CommentAndRating_ProductMaster" FromRole="ProductMaster" ToRole="CommentAndRating" />
+    <Property Name="IsFeatured" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="ProductCategory" Relationship="B2CModel.FK_ProductMaster_ProductCategory" FromRole="ProductMaster" ToRole="ProductCategory" />
+    <NavigationProperty Name="Carts" Relationship="B2CModel.FK_Cart_ProductMaster" FromRole="ProductMaster" ToRole="Cart" />
+    <NavigationProperty Name="OrderDetailLogs" Relationship="B2CModel.FK_AuditOrderDetail_ProductMaster" FromRole="ProductMaster" ToRole="OrderDetailLog" />
+  </EntityType>
+  <EntityType Name="ProductPackSize">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="0" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="ProductMasters" Relationship="B2CModel.FK_ProductMaster_ProductPackSize" FromRole="ProductPackSize" ToRole="ProductMaster" />
+    <Property Name="UOM" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="UnitInNumeric" Type="Int32" />
+  </EntityType>
+  <EntityType Name="ProductVariant">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="0" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="ProductMasters" Relationship="B2CModel.FK_ProductMaster_ProductVariant" FromRole="ProductVariant" ToRole="ProductMaster" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Userinfo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_OrderDetail_ProductMaster">
+    <End Type="B2CModel.ProductMaster" Role="ProductMaster" Multiplicity="1" />
+    <End Type="B2CModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="FK_ProductMaster" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductMaster_ProductBrand">
+    <End Type="B2CModel.ProductBrand" Role="ProductBrand" Multiplicity="1" />
+    <End Type="B2CModel.ProductMaster" Role="ProductMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductBrand">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductMaster">
+        <PropertyRef Name="FK_ProductBrand" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductDetail_ProductMaster">
+    <End Type="B2CModel.ProductMaster" Role="ProductMaster" Multiplicity="1" />
+    <End Type="B2CModel.ProductDetail" Role="ProductDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductDetail">
+        <PropertyRef Name="FK_ProductMaster" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductMaster_ProductPackSize">
+    <End Type="B2CModel.ProductPackSize" Role="ProductPackSize" Multiplicity="1" />
+    <End Type="B2CModel.ProductMaster" Role="ProductMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductPackSize">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductMaster">
+        <PropertyRef Name="FK_ProductPackSize" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductMaster_ProductVariant">
+    <End Type="B2CModel.ProductVariant" Role="ProductVariant" Multiplicity="1" />
+    <End Type="B2CModel.ProductMaster" Role="ProductMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductVariant">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductMaster">
+        <PropertyRef Name="FK_ProductVeriant" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ProductPrice">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="0" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="FK_City" Type="Int32" Nullable="false" />
+    <Property Name="FK_ProductMaster" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ProductMaster" Relationship="B2CModel.FK_ProductPrice_ProductMaster" FromRole="ProductPrice" ToRole="ProductMaster" />
+  </EntityType>
+  <Association Name="FK_ProductPrice_ProductMaster">
+    <End Type="B2CModel.ProductMaster" Role="ProductMaster" Multiplicity="1" />
+    <End Type="B2CModel.ProductPrice" Role="ProductPrice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductPrice">
+        <PropertyRef Name="FK_ProductMaster" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="customer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="EmailId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+    <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="0" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Guid" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsWebUser" Type="Boolean" />
+    <Property Name="IsAppUser" Type="Boolean" />
+    <Property Name="RegisteredFrom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Carts" Relationship="B2CModel.FK_Cart_Customer" FromRole="customer" ToRole="Cart" />
+    <NavigationProperty Name="OrderMasters" Relationship="B2CModel.FK_OrderMaster_Customer" FromRole="customer" ToRole="OrderMaster" />
+    <NavigationProperty Name="OrderMasterLogs" Relationship="B2CModel.FK_OrderMasterLogs_Customer" FromRole="customer" ToRole="OrderMasterLog" />
+  </EntityType>
+  <EntityType Name="CommentAndRating">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Comment" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Rate" Type="Int32" />
+    <Property Name="FK_ProductMaster" Type="Int32" />
+    <Property Name="CustomerId" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="0" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="Guid" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsAnonymousUser" Type="Boolean" />
+    <Property Name="AnonymousName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="EmailId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ProductMaster" Relationship="B2CModel.FK_CommentAndRating_ProductMaster" FromRole="CommentAndRating" ToRole="ProductMaster" />
+  </EntityType>
+  <Association Name="FK_CommentAndRating_ProductMaster">
+    <End Type="B2CModel.ProductMaster" Role="ProductMaster" Multiplicity="0..1" />
+    <End Type="B2CModel.CommentAndRating" Role="CommentAndRating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CommentAndRating">
+        <PropertyRef Name="FK_ProductMaster" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ProductCategory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="0" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="ProductMasters" Relationship="B2CModel.FK_ProductMaster_ProductCategory" FromRole="ProductCategory" ToRole="ProductMaster" />
+  </EntityType>
+  <Association Name="FK_ProductMaster_ProductCategory">
+    <End Type="B2CModel.ProductCategory" Role="ProductCategory" Multiplicity="1" />
+    <End Type="B2CModel.ProductMaster" Role="ProductMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductCategory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductMaster">
+        <PropertyRef Name="FK_ProductCategory" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Cart">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FK_ProductMaster" Type="Int32" Nullable="false" />
+    <Property Name="FK_Customer" Type="Int32" />
+    <Property Name="Guid" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="IsWishlist" Type="Boolean" />
+    <Property Name="TotalQuantity" Type="Int32" />
+    <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="0" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="Currency" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ConversionRate" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="customer" Relationship="B2CModel.FK_Cart_Customer" FromRole="Cart" ToRole="customer" />
+    <NavigationProperty Name="ProductMaster" Relationship="B2CModel.FK_Cart_ProductMaster" FromRole="Cart" ToRole="ProductMaster" />
+  </EntityType>
+  <Association Name="FK_Cart_Customer">
+    <End Type="B2CModel.customer" Role="customer" Multiplicity="0..1" />
+    <End Type="B2CModel.Cart" Role="Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="FK_Customer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cart_ProductMaster">
+    <End Type="B2CModel.ProductMaster" Role="ProductMaster" Multiplicity="1" />
+    <End Type="B2CModel.Cart" Role="Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="FK_ProductMaster" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="OrderMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderDescription" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="TotalQuantity" Type="Int32" />
+    <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="FK_Customer" Type="Int32" Nullable="false" />
+    <Property Name="OrderNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ShippingAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="BillingAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="EmailId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+    <Property Name="CNIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="0" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Currency" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ConversionRate" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="PaymentMode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PaymentStatus" Type="Boolean" />
+    <Property Name="IsPriceChanged" Type="Boolean" />
+    <NavigationProperty Name="customer" Relationship="B2CModel.FK_OrderMaster_Customer" FromRole="OrderMaster" ToRole="customer" />
+    <NavigationProperty Name="OrderDetails" Relationship="B2CModel.FK_OrderDetail_OrderMaster" FromRole="OrderMaster" ToRole="OrderDetail" />
+    <NavigationProperty Name="OrderDetailLogs" Relationship="B2CModel.FK_AuditOrderDetail_OrderMaster" FromRole="OrderMaster" ToRole="OrderDetailLog" />
+  </EntityType>
+  <EntityType Name="OrderDetailLog">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="FK_OrderMaster" />
+      <PropertyRef Name="FK_ProductMaster" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="FK_OrderMaster" Type="Int32" Nullable="false" />
+    <Property Name="FK_ProductMaster" Type="Int32" Nullable="false" />
+    <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="0" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="FK_Customer" Type="Int32" />
+    <Property Name="DiscountedPrice" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Currency" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ConversionRate" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="LogDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="OrderMaster" Relationship="B2CModel.FK_AuditOrderDetail_OrderMaster" FromRole="OrderDetailLog" ToRole="OrderMaster" />
+    <NavigationProperty Name="ProductMaster" Relationship="B2CModel.FK_AuditOrderDetail_ProductMaster" FromRole="OrderDetailLog" ToRole="ProductMaster" />
+  </EntityType>
+  <EntityType Name="OrderMasterLog">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="FK_Customer" />
+      <PropertyRef Name="Status" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="OrderDescription" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="TotalQuantity" Type="Int32" />
+    <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="FK_Customer" Type="Int32" Nullable="false" />
+    <Property Name="OrderNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ShippingAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="BillingAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="EmailId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+    <Property Name="CNIC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="0" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Currency" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ConversionRate" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="PaymentMode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PaymentStatus" Type="Boolean" />
+    <Property Name="IsPriceChanged" Type="Boolean" />
+    <Property Name="LogDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="customer" Relationship="B2CModel.FK_OrderMasterLogs_Customer" FromRole="OrderMasterLog" ToRole="customer" />
+  </EntityType>
+  <Association Name="FK_OrderMaster_Customer">
+    <End Type="B2CModel.customer" Role="customer" Multiplicity="1" />
+    <End Type="B2CModel.OrderMaster" Role="OrderMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderMaster">
+        <PropertyRef Name="FK_Customer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderMasterLogs_Customer">
+    <End Type="B2CModel.customer" Role="customer" Multiplicity="1" />
+    <End Type="B2CModel.OrderMasterLog" Role="OrderMasterLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderMasterLog">
+        <PropertyRef Name="FK_Customer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetail_OrderMaster">
+    <End Type="B2CModel.OrderMaster" Role="OrderMaster" Multiplicity="1" />
+    <End Type="B2CModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="FK_OrderMaster" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AuditOrderDetail_OrderMaster">
+    <End Type="B2CModel.OrderMaster" Role="OrderMaster" Multiplicity="1" />
+    <End Type="B2CModel.OrderDetailLog" Role="OrderDetailLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderDetailLog">
+        <PropertyRef Name="FK_OrderMaster" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AuditOrderDetail_ProductMaster">
+    <End Type="B2CModel.ProductMaster" Role="ProductMaster" Multiplicity="1" />
+    <End Type="B2CModel.OrderDetailLog" Role="OrderDetailLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderDetailLog">
+        <PropertyRef Name="FK_ProductMaster" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+</Schema>
